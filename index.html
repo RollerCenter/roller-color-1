@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roller Color 1 – Ombre Roller Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ÉCRAN DE BLOCAGE (affiché par défaut, caché si code valide) -->
+  <div id="accessBlocked" class="access-blocked">
+    <div class="blocked-card">
+      <img src="logo_small.png" alt="Logo" class="blocked-logo"/>
+      <h1>🔒 Accès Restreint</h1>
+      <p>Cette plateforme est réservée aux participants ayant effectué leur paiement.</p>
+      <p class="blocked-sub">Contactez-nous pour obtenir votre lien personnel.</p>
+      <div class="blocked-contact">
+        <span>📞 +226 70723718 / 07401919</span>
+        <span>📱 @ombrerollercenter</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENU PRINCIPAL (caché par défaut) -->
+  <div id="mainContent" style="display:none;">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-inner">
+        <img src="logo_small.png" alt="Ombre Roller Center" class="logo"/>
+        <div class="event-title">
+          <span class="roller">ROLLER</span>
+          <span class="color">COLOR <em>1</em></span>
+        </div>
+        <div class="event-meta">
+          <span>📅 27 Juin 2025</span>
+          <span>⏰ 15H GMT</span>
+          <span>📍 Patte d'oie, cité Asecna</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+      <section class="form-section">
+        <h2>Enregistre ton ticket</h2>
+        <p class="subtitle">Remplis le formulaire ci-dessous pour générer ton ticket de participation.</p>
+
+        <div id="alreadyUsed" class="already-used" style="display:none;">
+          <div class="already-used-inner">
+            <span>⚠️</span>
+            <div>
+              <strong>Lien déjà utilisé</strong>
+              <p>Ce lien a déjà servi à générer un ticket. Chaque lien est à usage unique.</p>
+              <p>Contactez-nous si vous avez besoin d'aide : <strong>+226 70723718</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card" id="formCard">
+          <div class="access-badge">
+            <span class="badge-dot"></span>
+            <span id="accessCodeDisplay"></span>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Nom *</label>
+              <input type="text" id="nom" placeholder="Votre nom" />
+            </div>
+            <div class="field">
+              <label>Prénom *</label>
+              <input type="text" id="prenom" placeholder="Votre prénom" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Adresse e-mail *</label>
+            <input type="email" id="email" placeholder="votre@email.com" />
+          </div>
+          <div class="field">
+            <label>Numéro WhatsApp *</label>
+            <input type="tel" id="whatsapp" placeholder="+226 XX XX XX XX" />
+          </div>
+          <div class="field">
+            <label>Taille T-shirt *</label>
+            <select id="taille">
+              <option value="">-- Choisir la taille --</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <button class="btn-generate" onclick="generateTicket()">
+            🎫 Générer mon ticket
+          </button>
+        </div>
+
+        <!-- TICKET PREVIEW -->
+        <div class="ticket-preview" id="ticketPreview" style="display:none;">
+          <div class="ticket-card" id="ticketCard">
+            <div class="ticket-header">
+              <img id="ticketLogo" src="logo_small.png" alt="Logo"/>
+              <div>
+                <div class="ticket-event">ROLLER COLOR 1</div>
+                <div class="ticket-org">Ombre Roller Center</div>
+              </div>
+            </div>
+            <div class="ticket-divider"></div>
+            <div class="ticket-body">
+              <div class="ticket-info-grid">
+                <div class="ticket-info-item">
+                  <span class="label">Participant</span>
+                  <span class="value" id="tNom"></span>
+                </div>
+                <div class="ticket-info-item">
+                  <span class="label">E-mail</span>
+                  <span class="value" id="tEmail"></span>
+                </div>
+                <div class="ticket-info-item">
+                  <span class="label">WhatsApp</span>
+                  <span class="value" id="tWhatsapp"></span>
+                </div>
+                <div class="ticket-info-item">
+                  <span class="label">T-shirt</span>
+                  <span class="value" id="tTaille"></span>
+                </div>
+                <div class="ticket-info-item">
+                  <span class="label">Date</span>
+                  <span class="value">27 Juin 2025 – 15H GMT</span>
+                </div>
+                <div class="ticket-info-item">
+                  <span class="label">Lieu</span>
+                  <span class="value">Patte d'oie, cité Asecna</span>
+                </div>
+              </div>
+              <div class="ticket-qr">
+                <div id="qrcode"></div>
+                <p>Scanner à l'entrée</p>
+              </div>
+            </div>
+            <div class="ticket-footer">
+              <div class="ticket-perks">
+                <span>✅ Pass Entrée</span>
+                <span>👕 T-shirt</span>
+                <span>🎨 Couleurs fluos</span>
+                <span>💧 Rafraîchissement</span>
+                <span>🛼 Coaching roller</span>
+              </div>
+              <div class="ticket-ref" id="tRef"></div>
+            </div>
+          </div>
+          <div class="download-actions">
+            <button class="btn-download" onclick="downloadTicketPDF()">⬇️ Télécharger mon ticket (PDF)</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACTIVITÉS -->
+      <section class="activities-section">
+        <h2>Au programme</h2>
+        <div class="activities-grid">
+          <div class="activity-card">🎨<span>Color party</span></div>
+          <div class="activity-card">🎧<span>Ambiance DJ</span></div>
+          <div class="activity-card">🛍️<span>Rue marchande</span></div>
+          <div class="activity-card">🛼<span>Apprentissage roller</span></div>
+          <div class="activity-card">🎤<span>Prestation d'artistes</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Ombre Roller Center &nbsp;|&nbsp; 📞 +226 70723718 / 07401919 &nbsp;|&nbsp; @ombrerollercenter</p>
+      <p class="dev-credit">Développé par <strong>DynamixVision</strong></p>
+    </footer>
+
+  </div><!-- fin #mainContent -->
+
+  <script src="app.js"></script>
+</body>
+</html>
