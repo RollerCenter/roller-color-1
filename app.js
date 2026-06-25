@@ -122,31 +122,32 @@ async function generateTicket() {
   btn.textContent = '⏳ Enregistrement...';
   btn.disabled = true;
 
-  // Marquer le code comme utilisé dans localStorage
+  // Marquer le code comme utilisé dans localStorage IMMÉDIATEMENT
   localStorage.setItem('rc1_used_' + currentAccessCode, JSON.stringify({
     nom: `${data.prenom} ${data.nom}`,
     ref,
     date: new Date().toISOString()
   }));
 
-  // Envoyer vers Google Forms (sans attendre réponse — évite le CORS)
-  try {
-    const formData = new FormData();
-    formData.append('entry.1028937762', currentAccessCode);  // Code
-    formData.append('entry.1573522421', data.nom);            // Nom
-    formData.append('entry.460397449', data.prenom);          // Prénom
-    formData.append('entry.757513500', data.email);           // Email
-    formData.append('entry.2139388098', data.whatsapp);       // WhatsApp
-    formData.append('entry.150173702', data.taille);          // Taille T-shirt
-    formData.append('entry.186289773', data.niveau);          // Niveau roller
-    formData.append('entry.2133509689', data.statut);         // Statut ticket
-    formData.append('entry.596297077', data.prix);            // Prix ticket
-    formData.append('entry.441166058', data.pointure || '-'); // Pointure
-    formData.append('entry.1657431358', ref);                 // Référence ticket
-    fetch(FORM_URL, { method: 'POST', body: formData, mode: 'no-cors' });
-  } catch(e) {}
+  // Envoyer vers Google Forms en arrière-plan (sans bloquer)
+  const formData = new FormData();
+  formData.append('entry.1028937762', currentAccessCode);
+  formData.append('entry.1573522421', data.nom);
+  formData.append('entry.460397449', data.prenom);
+  formData.append('entry.757513500', data.email);
+  formData.append('entry.2139388098', data.whatsapp);
+  formData.append('entry.150173702', data.taille);
+  formData.append('entry.186289773', data.niveau);
+  formData.append('entry.2133509689', data.statut);
+  formData.append('entry.596297077', data.prix);
+  formData.append('entry.441166058', data.pointure || '-');
+  formData.append('entry.1657431358', ref);
+  fetch(FORM_URL, { method: 'POST', body: formData, mode: 'no-cors' }).catch(() => {});
 
-  // Afficher le ticket immédiatement
+  // Réactiver le bouton et afficher le ticket IMMÉDIATEMENT
+  btn.textContent = '🎫 Générer mon ticket';
+  btn.disabled = false;
+
   currentData = { ...data, ref, code: currentAccessCode };
 
   document.getElementById('tNom').textContent = `${data.prenom} ${data.nom}`;
