@@ -111,25 +111,20 @@ function validateForm() {
 // ============================================================
 // GÉNÉRATION DU TICKET
 // ============================================================
-async function generateTicket() {
+function generateTicket() {
   if (!currentAccessCode) { showToast('Accès non autorisé.'); return; }
 
   const data = validateForm();
   if (!data) return;
 
   const ref = generateRef();
-  const btn = document.querySelector('.btn-generate');
-  btn.textContent = '⏳ Enregistrement...';
-  btn.disabled = true;
 
-  // Marquer le code comme utilisé dans localStorage IMMÉDIATEMENT
+  // Marquer utilisé dans localStorage
   localStorage.setItem('rc1_used_' + currentAccessCode, JSON.stringify({
-    nom: `${data.prenom} ${data.nom}`,
-    ref,
-    date: new Date().toISOString()
+    nom: `${data.prenom} ${data.nom}`, ref, date: new Date().toISOString()
   }));
 
-  // Envoyer vers Google Forms en arrière-plan (sans bloquer)
+  // Envoyer vers Google Forms en arrière-plan
   const formData = new FormData();
   formData.append('entry.1028937762', currentAccessCode);
   formData.append('entry.1573522421', data.nom);
@@ -144,10 +139,7 @@ async function generateTicket() {
   formData.append('entry.1657431358', ref);
   fetch(FORM_URL, { method: 'POST', body: formData, mode: 'no-cors' }).catch(() => {});
 
-  // Réactiver le bouton et afficher le ticket IMMÉDIATEMENT
-  btn.textContent = '🎫 Générer mon ticket';
-  btn.disabled = false;
-
+  // Remplir et afficher le ticket immédiatement
   currentData = { ...data, ref, code: currentAccessCode };
 
   document.getElementById('tNom').textContent = `${data.prenom} ${data.nom}`;
