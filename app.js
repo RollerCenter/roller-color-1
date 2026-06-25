@@ -1,765 +1,44 @@
 // ===== ROLLER COLOR 1 – APP.JS =====
 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx7IpqgMm4NfT_a5Bk2dEKCM4zD8QbVc5AXpzQ6DIwTQiis7xaHIIAPFe7DeNOVyCqm/exec';
+
 let currentData = null;
 let currentAccessCode = null;
 
 // ============================================================
-// 100 CODES PRÉ-CHARGÉS – intégrés directement dans le fichier
-// ============================================================
-const PRESET_CODES = {
-  "5C8ZGUQWEV": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "FYS4PYK4KG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "HZB2HW66X9": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "S9ETYG2NMR": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "TUXN6QAKMW": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "BNNQ2QFJ5G": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "82L3XHDBJX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "8KCUHTR3MV": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "NFWHZAYPP2": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "B56C9F48M5": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "L83UUGTL7P": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "NMK5ZJXD3L": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "K668CVBG3A": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "RGJHWHQ9BZ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "4HRZAVTETC": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "BUE7PVJ8FP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "VSSQB4MNFG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "8YZL8XPVM2": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "9A7KWAYJEK": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "GF4MBPFANQ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "82MVH554L9": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "HFTE4EWGZQ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "63SAT9EJ9V": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "P75WWVZYU9": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "FC7WFHY6A6": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "KNHC34XS2Z": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "PRXWVNZVGF": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "SV7KEA6Y2G": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "UQBD34TPFA": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "WMP6Q8MTH9": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "KLKFJHVGEM": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "KD8K5AU6ZP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "GQ6TYE9UN8": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "AV34ZK57T5": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "DT33P6F2SX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "SS9A6C7WG6": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "H5SAALMDPM": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "964PDTRLEG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "79WZEZ8FZF": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "RPBAR74VK5": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "9ZHQZY49ED": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "ZPNQNWGW5X": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "BZJ7WFHPEE": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "WBGSX7BTWB": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "VGJDMS2JQ4": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "LDMDM8XMDN": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "4LMDPQUZX2": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "GKCXBG3UC3": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "JW5N7G5SSR": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "AMZC422SNG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "E72KUKD33Q": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "HA7R4PGNHM": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "CS5DAKX8XY": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "ZCTK7BDD7P": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "J567FAZ3BP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "HLRYPVZPW7": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "YFZA3LUJMX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "7WRUFVWK3K": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "YMFU4HSM2R": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "VTCKBZE8JJ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "4XBP6QX2MX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "A9B9MPN3TB": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "D7LQ5DLCSW": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "K669B8XQDU": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "2AX32ZTCRL": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "JTB373W7J2": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "R9NVP3P7LG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "7CM2KJSHHP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "3HKTSS9QAX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "VPJ6K22KVJ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "7CBANNZ7P5": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "4PGHJ5MS5Z": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "QVJ8XZLZSC": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "2TK7QNXLEL": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "6GHKGZCABB": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "HEJWKQ2MSZ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "35WSRU7DWP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "T66SYAQUSK": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "RAQSZKGZ2Y": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "ZM26W9XLPX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "EVR4MPNNPC": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "F2C978L9JV": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "DBLTUWS9DZ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "42YK3YAGMS": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "SLW8KKSR5U": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "SKH6AE29BB": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "XKVJ34AGTR": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "89H6E3HR5K": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "7S7N5YNXWX": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "LTR47A6HY4": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "4LBH3CC3N8": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "DDHCQHY4GG": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "53SZSUBSWB": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "2DGFZW6YWT": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "ZM47DDBEFJ": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "8GQTZ2CZHP": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "KXSAXFNTTU": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "UXMQBB38JL": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "CQ8PCZTW92": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  },
-  "K9SQ28XRBE": {
-    "used": false,
-    "usedBy": null,
-    "usedAt": null,
-    "clientName": null,
-    "createdAt": "2025-06-24T00:00:00.000Z"
-  }
-};
-
-function getAllCodes() {
-  try {
-    const stored = JSON.parse(localStorage.getItem('rc1_codes') || 'null');
-    if (stored) return stored;
-  } catch {}
-  // Première visite : on charge les codes depuis le fichier
-  localStorage.setItem('rc1_codes', JSON.stringify(PRESET_CODES));
-  return PRESET_CODES;
-}
-
-function saveCodes(codes) {
-  localStorage.setItem('rc1_codes', JSON.stringify(codes));
-}
-
-function isCodeValid(code) {
-  const codes = getAllCodes();
-  return codes[code] && !codes[code].used;
-}
-
-function markCodeUsed(code, nom) {
-  const codes = getAllCodes();
-  if (codes[code]) {
-    codes[code].used = true;
-    codes[code].usedBy = nom;
-    codes[code].usedAt = new Date().toISOString();
-    saveCodes(codes);
-  }
-}
-
-// ============================================================
 // VÉRIFICATION À L'ENTRÉE
 // ============================================================
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
 
   if (!code) { showBlocked(); return; }
 
-  const codes = getAllCodes();
+  // Vérifier le code via Google Sheets
+  try {
+    const res = await fetch(`${SCRIPT_URL}?action=check&code=${code}`);
+    const data = await res.json();
 
-  if (!codes[code]) { showBlocked(); return; }
+    if (!data.valid && data.reason === 'invalid') {
+      showBlocked();
+      return;
+    }
 
-  if (codes[code].used) {
-    showMainContent(code);
-    showAlreadyUsed();
-    return;
+    if (!data.valid && data.reason === 'used') {
+      showMainContent();
+      showAlreadyUsed();
+      return;
+    }
+
+    // Code valide et libre
+    currentAccessCode = code;
+    showMainContent();
+    document.getElementById('accessCodeDisplay').textContent = `Code d'accès : ${code}`;
+
+  } catch (err) {
+    // En cas d'erreur réseau, bloquer par sécurité
+    showBlocked();
   }
-
-  currentAccessCode = code;
-  showMainContent(code);
-  document.getElementById('accessCodeDisplay').textContent = `Code d'accès : ${code}`;
 });
 
 function showBlocked() {
@@ -767,7 +46,7 @@ function showBlocked() {
   document.getElementById('mainContent').style.display = 'none';
 }
 
-function showMainContent(code) {
+function showMainContent() {
   document.getElementById('accessBlocked').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
 }
@@ -816,36 +95,83 @@ function validateForm() {
 // ============================================================
 // GÉNÉRATION DU TICKET
 // ============================================================
-function generateTicket() {
+async function generateTicket() {
   if (!currentAccessCode) { showToast('Accès non autorisé.'); return; }
-  if (!isCodeValid(currentAccessCode)) { showAlreadyUsed(); return; }
 
   const data = validateForm();
   if (!data) return;
 
-  currentData = { ...data, ref: generateRef(), code: currentAccessCode };
-  markCodeUsed(currentAccessCode, `${data.prenom} ${data.nom}`);
+  const ref = generateRef();
 
-  document.getElementById('tNom').textContent = `${data.prenom} ${data.nom}`;
-  document.getElementById('tEmail').textContent = data.email;
-  document.getElementById('tWhatsapp').textContent = data.whatsapp;
-  document.getElementById('tTaille').textContent = data.taille;
-  document.getElementById('tRef').textContent = `Réf : ${currentData.ref}`;
+  // Afficher chargement
+  const btn = document.querySelector('.btn-generate');
+  btn.textContent = '⏳ Enregistrement en cours...';
+  btn.disabled = true;
 
-  const qrContainer = document.getElementById('qrcode');
-  qrContainer.innerHTML = '';
-  new QRCode(qrContainer, {
-    text: JSON.stringify({ ref: currentData.ref, code: currentAccessCode, nom: `${data.prenom} ${data.nom}`, taille: data.taille, event: 'ROLLER COLOR 1', date: '27 Juin 2025' }),
-    width: 120, height: 120,
-    colorDark: '#000000', colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.H
-  });
+  try {
+    // Envoyer les données à Google Sheets
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        code: currentAccessCode,
+        nom: data.nom,
+        prenom: data.prenom,
+        email: data.email,
+        whatsapp: data.whatsapp,
+        taille: data.taille,
+        ref: ref
+      })
+    });
 
-  document.getElementById('formCard').style.display = 'none';
-  const preview = document.getElementById('ticketPreview');
-  preview.style.display = 'block';
-  preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  showToast('✅ Ticket généré avec succès !', 'success');
+    const result = await res.json();
+
+    if (!result.success) {
+      if (result.reason === 'already_used') {
+        showAlreadyUsed();
+      } else {
+        showToast('❌ Code invalide ou erreur. Contactez-nous.');
+      }
+      btn.textContent = '🎫 Générer mon ticket';
+      btn.disabled = false;
+      return;
+    }
+
+    // Succès — générer le ticket
+    currentData = { ...data, ref, code: currentAccessCode };
+
+    document.getElementById('tNom').textContent = `${data.prenom} ${data.nom}`;
+    document.getElementById('tEmail').textContent = data.email;
+    document.getElementById('tWhatsapp').textContent = data.whatsapp;
+    document.getElementById('tTaille').textContent = data.taille;
+    document.getElementById('tRef').textContent = `Réf : ${ref}`;
+
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = '';
+    new QRCode(qrContainer, {
+      text: JSON.stringify({
+        ref,
+        code: currentAccessCode,
+        nom: `${data.prenom} ${data.nom}`,
+        taille: data.taille,
+        event: 'ROLLER COLOR 1',
+        date: '27 Juin 2025'
+      }),
+      width: 120, height: 120,
+      colorDark: '#000000', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    document.getElementById('formCard').style.display = 'none';
+    const preview = document.getElementById('ticketPreview');
+    preview.style.display = 'block';
+    preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showToast('✅ Ticket généré avec succès !', 'success');
+
+  } catch (err) {
+    showToast('❌ Erreur réseau. Vérifiez votre connexion.');
+    btn.textContent = '🎫 Générer mon ticket';
+    btn.disabled = false;
+  }
 }
 
 // ============================================================
